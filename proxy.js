@@ -1,5 +1,6 @@
 var proxy = require('redbird')({
   port: process.env.PORT,
+  xfwd: false,
 });
 
 //Run this proxy to route traffic accordingly
