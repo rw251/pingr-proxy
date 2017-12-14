@@ -1,7 +1,21 @@
-var proxy = require('redbird')({
-  port: process.env.PORT,
-  xfwd: false,
-});
+//Options for proxywrap. This means the proxy will also respond to regular HTTP requests without PROXY information as well.
+var proxy_opts = {strict: false}; 
+var proxyWrap = require('findhit-proxywrap');
+var opts = {
+    port: process.env.PORT,
+    serverModule = proxyWrap.proxy( require('http'), proxy_opts),
+    // ssl: {
+    //     //Do this if you want http2:
+    //     //http2: true,        
+    //     //serverModule = proxyWrap.proxy(require('spdy').server, proxy_opts),
+    //     //Do this if you only want regular https
+    //     serverModule = proxyWrap.proxy( require('http'), proxy_opts), 
+    //     port: process.env.HTTPS_PORT,
+    // }
+}
+
+// Create the proxy
+var proxy = require('redbird')(opts);
 
 //Run this proxy to route traffic accordingly
 
