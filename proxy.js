@@ -3,7 +3,7 @@ var proxy_opts = {strict: false};
 var proxyWrap = require('findhit-proxywrap');
 var opts = {
     port: process.env.PORT,
-    serverModule = proxyWrap.proxy( require('http'), proxy_opts),
+    serverModule: proxyWrap.proxy( require('http'), proxy_opts),
     // ssl: {
     //     //Do this if you want http2:
     //     //http2: true,        
