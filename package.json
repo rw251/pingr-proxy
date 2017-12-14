@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/rw251/pingr-proxy#readme",
   "dependencies": {
+    "forever": "^0.15.3",
     "redbird": "^0.7.0"
   }
 }
