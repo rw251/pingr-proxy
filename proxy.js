@@ -11,5 +11,9 @@ var proxy = require('redbird')({
 
 //Production configuration
 proxy.register("pingr-proxy.herokuapp.com","https://pingr-dev.herokuapp.com");
-proxy.register("pingr-proxy.herokuapp.com/beta","https://pingr-ben.herokuapp.com");
+proxy.register("pingr-proxy.herokuapp.com/a","https://pingr-ben.herokuapp.com");
+proxy.register("pingr-proxy.herokuapp.com/b","http://pingr-dev.herokuapp.com");
+proxy.register("pingr-proxy.herokuapp.com/c","pingr-dev.herokuapp.com");
+proxy.register("pingr-proxy.herokuapp.com/d","http://cdown.rw251.com");
+
 
