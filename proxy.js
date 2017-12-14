@@ -9,6 +9,6 @@ var proxy = require('redbird')({
 // proxy.register("http://localhost","http://127.0.0.1:3333");
 
 //Production configuration
-proxy.register("https://pingr-proxy.herokuapp.com","https://pingr-dev.herokuapp.com");
-proxy.register("https://pingr-proxy.herokuapp.com/beta","https://pingr-ben.herokuapp.com");
+proxy.register("pingr-proxy.herokuapp.com","https://pingr-dev.herokuapp.com");
+proxy.register("pingr-proxy.herokuapp.com/beta","https://pingr-ben.herokuapp.com");
 
