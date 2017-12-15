@@ -1,18 +1,23 @@
 var express  = require('express');
 var app      = express();
 var httpProxy = require('http-proxy');
-var apiProxy = httpProxy.createProxyServer();
-var pingrDev = 'https://pingr-dev.herokuapp.com';
-var pingrBen = 'https://pingr-ben.herokuapp.com';
+var proxy = httpProxy.createProxyServer();
+var pingrDev = 'pingr-dev.herokuapp.com';
+var pingrBen = 'pingr-ben.herokuapp.com';
+
+proxy.on('proxyReq', function(proxyReq, req, res, options) {
+    proxyReq.setHeader('Host', pingrDev);
+    console.log(proxyReq);
+});
 
 app.all("/app1/*", function(req, res) {
     console.log('redirecting to pingrDev');
-    apiProxy.web(req, res, {target: pingrDev});
+    proxy.web(req, res, {target: `https://${pingrDev}`});
 });
 
 app.all("/app2/*", function(req, res) {
     console.log('redirecting to pingrBen');
-    apiProxy.web(req, res, {target: pingrBen});
+    proxy.web(req, res, {target: `https://${pingrBen}`});
 });
 
 app.get('/', (req, res) => {
