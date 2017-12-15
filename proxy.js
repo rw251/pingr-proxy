@@ -1,33 +1,24 @@
-//Options for proxywrap. This means the proxy will also respond to regular HTTP requests without PROXY information as well.
-var proxy_opts = {strict: false}; 
-var proxyWrap = require('findhit-proxywrap');
-var opts = {
-    port: process.env.PORT,
-    serverModule: proxyWrap.proxy( require('http'), proxy_opts),
-    // ssl: {
-    //     //Do this if you want http2:
-    //     //http2: true,        
-    //     //serverModule = proxyWrap.proxy(require('spdy').server, proxy_opts),
-    //     //Do this if you only want regular https
-    //     serverModule = proxyWrap.proxy( require('http'), proxy_opts), 
-    //     port: process.env.HTTPS_PORT,
-    // }
-}
+var express  = require('express');
+var app      = express();
+var httpProxy = require('http-proxy');
+var apiProxy = httpProxy.createProxyServer();
+var pingrDev = 'https://pingr-dev.herokuapp.com';
+var pingrBen = 'https://pingr-ben.herokuapp.com';
 
-// Create the proxy
-var proxy = require('redbird')(opts);
+app.all("/app1/*", function(req, res) {
+    console.log('redirecting to pingrDev');
+    apiProxy.web(req, res, {target: pingrDev});
+});
 
-//Run this proxy to route traffic accordingly
+app.all("/app2/*", function(req, res) {
+    console.log('redirecting to pingrBen');
+    apiProxy.web(req, res, {target: pingrBen});
+});
 
-// could do something like this..
-// proxy.register("http://localhost/bb","http://127.0.0.1:3334");
-// proxy.register("http://localhost","http://127.0.0.1:3333");
+app.get('/', (req, res) => {
+    res.send('ok');
+});
 
-//Production configuration
-proxy.register("pingr-proxy.herokuapp.com","https://pingr-dev.herokuapp.com");
-proxy.register("pingr-proxy.herokuapp.com/a","https://pingr-ben.herokuapp.com");
-proxy.register("pingr-proxy.herokuapp.com/b","http://pingr-dev.herokuapp.com");
-proxy.register("pingr-proxy.herokuapp.com/c","pingr-dev.herokuapp.com");
-proxy.register("pingr-proxy.herokuapp.com/d","http://cdown.rw251.com");
-
-
+app.listen(process.env.PORT || 3000, ()=>{
+    console.log(`Listening on port ${process.env.PORT||3000}`);
+});

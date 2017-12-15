@@ -18,8 +18,8 @@
   },
   "homepage": "https://github.com/rw251/pingr-proxy#readme",
   "dependencies": {
-    "findhit-proxywrap": "^0.3.12",
+    "express": "^4.16.2",
     "forever": "^0.15.3",
-    "redbird": "^0.7.0"
+    "http-proxy": "^1.16.2" 
   }
 }
