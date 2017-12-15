@@ -5,18 +5,18 @@ var proxy = httpProxy.createProxyServer();
 var pingrDev = 'pingr-dev.herokuapp.com';
 var pingrBen = 'pingr-ben.herokuapp.com';
 
-app.all("/*", function(req, res) {
-    console.log('redirecting to pingrBen');
-    proxy.web(req, res, {target: `https://${pingrBen}`, changeOrigin: true});
+app.get('/a', (req, res) => {
+    res.send('ok');
 });
 
-app.all("/beta/*", function(req, res) {
+app.all("/beta*", function(req, res) {
     console.log('redirecting to pingrDev');
     proxy.web(req, res, {target: `https://${pingrDev}`, changeOrigin: true});
 });
 
-app.get('/alpha/', (req, res) => {
-    res.send('ok');
+app.all("/*", function(req, res) {
+    console.log('redirecting to pingrBen');
+    proxy.web(req, res, {target: `https://${pingrBen}`, changeOrigin: true});
 });
 
 app.listen(process.env.PORT || 3000, ()=>{
